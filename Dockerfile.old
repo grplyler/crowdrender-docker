@@ -1,28 +1,4 @@
-FROM nvidia/cuda:11.4.2-runtime-ubuntu20.04 as base
-
-ENV CR_VERSION cr_031_bl280
-
-WORKDIR /CR
-COPY blender-3.0.0-linux-x64.tar.xz .
-COPY cr_031_bl280.zip .
-COPY start_cr_server.sh .
-COPY install_blender.sh .
-COPY install_addon.sh .
-COPY install_addon.py .
-COPY activate_gpu.py .
+FROM nvidia/cuda:base
 
 
-RUN chmod +x ./*.sh
-RUN chmod -R 777 /CR
-
-
-# Install Blender
-RUN apt update
-RUN apt install -y xz-utils libx11-6 libxi6 libxxf86vm1 libxfixes3 libxrender1 libgl1
-RUN ./install_blender.sh
-
-# Install Crowdrender addon and activate GPU
-RUN ./install_addon.sh
-RUN blender -b -noaudio -P activate_gpu.py
-
-ENTRYPOINT bash
+ENTRYPOINT nvidia-smi
