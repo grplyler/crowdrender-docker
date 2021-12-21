@@ -19,7 +19,7 @@ else
 fi
 
 # Check for crowdrender
-if [ -f "$BTAR" ]; then
+if [ -f "$CRZIP" ]; then
     echo "$CRZIP already downloaded."
 else
     echo "downloading crowdrender..."
